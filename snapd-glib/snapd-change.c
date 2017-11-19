@@ -10,6 +10,7 @@
 #include <string.h>
 
 #include "snapd-change.h"
+#include "snapd-enum-types.h"
 
 /**
  * SECTION: snapd-change
@@ -35,7 +36,8 @@ struct _SnapdChange
     gchar *id;
     gchar *kind;
     gchar *summary;
-    gchar *status;
+    gchar *status; /* deprecated */
+    SnapdTaskStatus status_code;
     GPtrArray *tasks;
     gboolean ready;
     GDateTime *spawn_time;
@@ -49,6 +51,7 @@ enum
     PROP_KIND,
     PROP_SUMMARY,
     PROP_STATUS,
+    PROP_STATUS_CODE,
     PROP_TASKS,
     PROP_READY,
     PROP_SPAWN_TIME,
@@ -119,12 +122,30 @@ snapd_change_get_summary (SnapdChange *self)
  * Returns: a status string.
  *
  * Since: 1.5
+ * Deprecated: 1.30: Use snapd_change_get_status_code()
  */
 const gchar *
 snapd_change_get_status (SnapdChange *self)
 {
     g_return_val_if_fail (SNAPD_IS_CHANGE (self), NULL);
     return self->status;
+}
+
+/**
+ * snapd_change_get_status_code:
+ * @change: a #SnapdChange.
+ *
+ * Get the status of the change (a summary of the task statuses).
+ *
+ * Returns: a #SnapdTaskStatus.
+ *
+ * Since: 1.30
+ */
+SnapdTaskStatus
+snapd_change_get_status_code (SnapdChange *self)
+{
+    g_return_val_if_fail (SNAPD_IS_CHANGE (self), SNAPD_TASK_STATUS_UNKNOWN);
+    return self->status_code;
 }
 
 /**
@@ -234,6 +255,9 @@ snapd_change_set_property (GObject *object, guint prop_id, const GValue *value, 
         g_free (self->status);
         self->status = g_strdup (g_value_get_string (value));
         break;
+    case PROP_STATUS_CODE:
+        self->status_code = g_value_get_enum (value);
+        break;
     case PROP_TASKS:
         g_clear_pointer (&self->tasks, g_ptr_array_unref);
         if (g_value_get_boxed (value) != NULL)
@@ -279,6 +303,9 @@ snapd_change_get_property (GObject *object, guint prop_id, GValue *value, GParam
         break;
     case PROP_STATUS:
         g_value_set_string (value, self->status);
+        break;
+    case PROP_STATUS_CODE:
+        g_value_set_enum (value, self->status_code);
         break;
     case PROP_TASKS:
         g_value_set_boxed (value, self->tasks);
@@ -355,6 +382,13 @@ snapd_change_class_init (SnapdChangeClass *klass)
                                                           "Status of change",
                                                           NULL,
                                                           G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+    g_object_class_install_property (gobject_class,
+                                     PROP_STATUS_CODE,
+                                     g_param_spec_enum ("status-code",
+                                                        "status-code",
+                                                        "Status of change",
+                                                        SNAPD_TYPE_TASK_STATUS, SNAPD_TASK_STATUS_UNKNOWN,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
     g_object_class_install_property (gobject_class,
                                      PROP_TASKS,
                                      g_param_spec_boxed ("tasks",

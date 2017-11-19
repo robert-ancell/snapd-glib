@@ -15,6 +15,7 @@
 #endif
 
 #include <glib-object.h>
+#include <snapd-glib/snapd-task.h>
 
 G_BEGIN_DECLS
 
@@ -22,21 +23,24 @@ G_BEGIN_DECLS
 
 G_DECLARE_FINAL_TYPE (SnapdChange, snapd_change, SNAPD, CHANGE, GObject)
 
-const gchar *snapd_change_get_id         (SnapdChange *change);
+const gchar    *snapd_change_get_id          (SnapdChange *change);
 
-const gchar *snapd_change_get_kind       (SnapdChange *change);
+const gchar    *snapd_change_get_kind        (SnapdChange *change);
 
-const gchar *snapd_change_get_summary    (SnapdChange *change);
+const gchar    *snapd_change_get_summary     (SnapdChange *change);
 
-const gchar *snapd_change_get_status     (SnapdChange *change);
+G_DEPRECATED_FOR (snapd_change_get_status_code)
+const gchar    *snapd_change_get_status      (SnapdChange *change);
 
-gboolean     snapd_change_get_ready      (SnapdChange *change);
+SnapdTaskStatus snapd_change_get_status_code (SnapdChange *change);
 
-GPtrArray   *snapd_change_get_tasks      (SnapdChange *change);
+gboolean        snapd_change_get_ready       (SnapdChange *change);
 
-GDateTime   *snapd_change_get_spawn_time (SnapdChange *change);
+GPtrArray      *snapd_change_get_tasks       (SnapdChange *change);
 
-GDateTime   *snapd_change_get_ready_time (SnapdChange *change);
+GDateTime      *snapd_change_get_spawn_time  (SnapdChange *change);
+
+GDateTime      *snapd_change_get_ready_time  (SnapdChange *change);
 
 const gchar *snapd_change_get_error      (SnapdChange *change);
 

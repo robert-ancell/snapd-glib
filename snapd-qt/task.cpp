@@ -30,7 +30,9 @@ QString QSnapdTask::summary () const
 
 QString QSnapdTask::status () const
 {
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     return snapd_task_get_status (SNAPD_TASK (wrapped_object));
+G_GNUC_END_IGNORE_DEPRECATIONS
 }
 
 QString QSnapdTask::progressLabel () const

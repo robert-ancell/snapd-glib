@@ -124,6 +124,7 @@ struct _MockChange
     gchar *id;
     gchar *kind;
     gchar *summary;
+    gchar *status;
     gchar *spawn_time;
     gchar *ready_time;
     int task_index;
@@ -769,6 +770,7 @@ add_change (MockSnapd *self)
     change->id = g_strdup_printf ("%d", self->change_index);
     change->kind = g_strdup ("KIND");
     change->summary = g_strdup ("SUMMARY");
+    change->status = g_strdup ("Do");
     change->task_index = self->change_index * 100;
     self->changes = g_list_append (self->changes, change);
 
@@ -1907,6 +1909,7 @@ mock_change_free (MockChange *change)
     g_free (change->id);
     g_free (change->kind);
     g_free (change->summary);
+    g_free (change->status);
     g_free (change->spawn_time);
     g_free (change->ready_time);
     g_list_free_full (change->tasks, (GDestroyNotify) mock_task_free);

@@ -11,6 +11,7 @@
 
 #include "snapd-task.h"
 #include "snapd-change.h"
+#include "snapd-enum-types.h"
 
 /**
  * SECTION: snapd-task
@@ -35,7 +36,8 @@ struct _SnapdTask
     gchar *id;
     gchar *kind;
     gchar *summary;
-    gchar *status;
+    gchar *status; /* deprecated */
+    SnapdTaskStatus status_code;
     gchar *progress_label;
     gint64 progress_done;
     gint64 progress_total;
@@ -49,6 +51,7 @@ enum
     PROP_KIND,
     PROP_SUMMARY,
     PROP_STATUS,
+    PROP_STATUS_CODE,
     PROP_READY,
     PROP_PROGRESS_DONE,
     PROP_PROGRESS_TOTAL,
@@ -132,16 +135,36 @@ snapd_task_get_summary (SnapdTask *self)
  * Returns: a status string.
  *
  * Since: 1.0
+ * Deprecated: 1.64: Use snapd_task_get_status_code()
  */
 const gchar *
 snapd_task_get_status (SnapdTask *self)
 {
     /* Workaround to handle API change in SnapdProgressCallback */
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     if (SNAPD_IS_CHANGE (self))
         return snapd_change_get_status (SNAPD_CHANGE (self));
+G_GNUC_END_IGNORE_DEPRECATIONS
 
     g_return_val_if_fail (SNAPD_IS_TASK (self), NULL);
     return self->status;
+}
+
+/**
+ * snapd_task_get_status_code:
+ * @task: a #SnapdTask.
+ *
+ * Get the status of the task.
+ *
+ * Returns: a #SnapdTaskStatus.
+ *
+ * Since: 1.64
+ */
+SnapdTaskStatus
+snapd_task_get_status_code (SnapdTask *self)
+{
+    g_return_val_if_fail (SNAPD_IS_TASK (self), SNAPD_TASK_STATUS_UNKNOWN);
+    return self->status_code;
 }
 
 /**
@@ -293,6 +316,9 @@ snapd_task_set_property (GObject *object, guint prop_id, const GValue *value, GP
         g_free (self->status);
         self->status = g_strdup (g_value_get_string (value));
         break;
+    case PROP_STATUS_CODE:
+        self->status_code = g_value_get_enum (value);
+        break;
     case PROP_READY:
         // Deprecated
         break;
@@ -339,6 +365,9 @@ snapd_task_get_property (GObject *object, guint prop_id, GValue *value, GParamSp
         break;
     case PROP_STATUS:
         g_value_set_string (value, self->status);
+        break;
+    case PROP_STATUS_CODE:
+        g_value_set_enum (value, self->status_code);
         break;
     case PROP_PROGRESS_LABEL:
         g_value_set_string (value, self->progress_label);
@@ -416,7 +445,14 @@ snapd_task_class_init (SnapdTaskClass *klass)
                                                           "status",
                                                           "Status of task",
                                                           NULL,
-                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+                                                          G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY | G_PARAM_DEPRECATED));
+    g_object_class_install_property (gobject_class,
+                                     PROP_STATUS_CODE,
+                                     g_param_spec_enum ("status-code",
+                                                        "status-code",
+                                                        "Status of task",
+                                                        SNAPD_TYPE_TASK_STATUS, SNAPD_TASK_STATUS_UNKNOWN,
+                                                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
     g_object_class_install_property (gobject_class,
                                      PROP_PROGRESS_LABEL,
                                      g_param_spec_string ("progress-label",
