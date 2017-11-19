@@ -61,6 +61,7 @@ snapd_change_get_id
 snapd_change_get_kind
 snapd_change_get_summary
 snapd_change_get_status
+snapd_change_get_status_code
 snapd_change_get_tasks
 snapd_change_get_ready
 snapd_change_get_spawn_time
@@ -554,6 +555,7 @@ snapd_task_get_id
 snapd_task_get_kind
 snapd_task_get_summary
 snapd_task_get_status
+snapd_task_get_status_code
 snapd_task_get_ready
 snapd_task_get_progress_label
 snapd_task_get_progress_done

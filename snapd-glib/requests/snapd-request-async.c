@@ -83,7 +83,7 @@ tasks_equal (SnapdTask *task1, SnapdTask *task2)
     return g_strcmp0 (snapd_task_get_id (task1), snapd_task_get_id (task2)) == 0 &&
            g_strcmp0 (snapd_task_get_kind (task1), snapd_task_get_kind (task2)) == 0 &&
            g_strcmp0 (snapd_task_get_summary (task1), snapd_task_get_summary (task2)) == 0 &&
-           g_strcmp0 (snapd_task_get_status (task1), snapd_task_get_status (task2)) == 0 &&
+           snapd_task_get_status_code (task1) == snapd_task_get_status_code (task2) &&
            g_strcmp0 (snapd_task_get_progress_label (task1), snapd_task_get_progress_label (task2)) == 0 &&
            snapd_task_get_progress_done (task1) == snapd_task_get_progress_done (task2) &&
            snapd_task_get_progress_total (task1) == snapd_task_get_progress_total (task2) &&
@@ -120,7 +120,7 @@ changes_equal (SnapdChange *change1, SnapdChange *change2)
     return g_strcmp0 (snapd_change_get_id (change1), snapd_change_get_id (change2)) == 0 &&
            g_strcmp0 (snapd_change_get_kind (change1), snapd_change_get_kind (change2)) == 0 &&
            g_strcmp0 (snapd_change_get_summary (change1), snapd_change_get_summary (change2)) == 0 &&
-           g_strcmp0 (snapd_change_get_status (change1), snapd_change_get_status (change2)) == 0 &&
+           snapd_change_get_status_code (change1) == snapd_change_get_status_code (change2) &&
            !!snapd_change_get_ready (change1) == !!snapd_change_get_ready (change2) &&
            times_equal (snapd_change_get_spawn_time (change1), snapd_change_get_spawn_time (change2)) &&
            times_equal (snapd_change_get_spawn_time (change1), snapd_change_get_spawn_time (change2));

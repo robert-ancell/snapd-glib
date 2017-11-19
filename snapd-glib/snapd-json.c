@@ -450,6 +450,31 @@ _snapd_json_get_async_result (JsonObject *response, GError **error)
     return g_strdup (json_node_get_string (change_node));
 }
 
+static SnapdTaskStatus
+parse_status_code (const gchar *text)
+{
+    if (text == NULL)
+        return SNAPD_TASK_STATUS_UNKNOWN;
+    if (strcmp (text, "Do") == 0)
+        return SNAPD_TASK_STATUS_DO;
+    if (strcmp (text, "Doing") == 0)
+        return SNAPD_TASK_STATUS_DOING;
+    if (strcmp (text, "Done") == 0)
+        return SNAPD_TASK_STATUS_DONE;
+    if (strcmp (text, "Abort") == 0)
+        return SNAPD_TASK_STATUS_ABORT;
+    if (strcmp (text, "Undo") == 0)
+        return SNAPD_TASK_STATUS_UNDO;
+    if (strcmp (text, "Undoing") == 0)
+        return SNAPD_TASK_STATUS_UNDOING;
+    if (strcmp (text, "Hold") == 0)
+        return SNAPD_TASK_STATUS_HOLD;
+    if (strcmp (text, "Error") == 0)
+        return SNAPD_TASK_STATUS_ERROR;
+
+    return SNAPD_TASK_STATUS_UNKNOWN;
+}
+
 SnapdChange *
 _snapd_json_parse_change (JsonObject *object, GError **error)
 {
@@ -484,7 +509,8 @@ _snapd_json_parse_change (JsonObject *object, GError **error)
                           "id", _snapd_json_get_string (object, "id", NULL),
                           "kind", _snapd_json_get_string (object, "kind", NULL),
                           "summary", _snapd_json_get_string (object, "summary", NULL),
-                          "status", _snapd_json_get_string (object, "status", NULL),
+                          "status", _snapd_json_get_string (object, "status", NULL), /* deprecated */
+                          "status-code", parse_status_code (_snapd_json_get_string (object, "status", NULL)),
                           "progress-label", progress != NULL ? _snapd_json_get_string (progress, "label", NULL) : NULL,
                           "progress-done", progress != NULL ? _snapd_json_get_int (progress, "done", 0) : 0,
                           "progress-total", progress != NULL ? _snapd_json_get_int (progress, "total", 0) : 0,
@@ -501,7 +527,8 @@ _snapd_json_parse_change (JsonObject *object, GError **error)
                          "id", _snapd_json_get_string (object, "id", NULL),
                          "kind", _snapd_json_get_string (object, "kind", NULL),
                          "summary", _snapd_json_get_string (object, "summary", NULL),
-                         "status", _snapd_json_get_string (object, "status", NULL),
+                         "status", _snapd_json_get_string (object, "status", NULL), /* deprecated */
+                         "status-code", parse_status_code (_snapd_json_get_string (object, "status", NULL)),
                          "tasks", tasks,
                          "ready", _snapd_json_get_bool (object, "ready", FALSE),
                          "spawn-time", main_spawn_time,

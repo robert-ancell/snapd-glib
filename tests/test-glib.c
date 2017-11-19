@@ -722,7 +722,7 @@ test_get_changes_sync (void)
     g_assert_cmpstr (snapd_change_get_id (changes->pdata[0]), ==, "1");
     g_assert_cmpstr (snapd_change_get_kind (changes->pdata[0]), ==, "KIND");
     g_assert_cmpstr (snapd_change_get_summary (changes->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_change_get_status (changes->pdata[0]), ==, "Done");
+    g_assert_cmpint (snapd_change_get_status_code (changes->pdata[0]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_true (snapd_change_get_ready (changes->pdata[0]));
     g_assert (date_matches (snapd_change_get_spawn_time (changes->pdata[0]), 2017, 1, 2, 11, 0, 0));
     g_assert (date_matches (snapd_change_get_ready_time (changes->pdata[0]), 2017, 1, 2, 11, 0, 30));
@@ -733,7 +733,7 @@ test_get_changes_sync (void)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[0]), ==, "100");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[0]), ==, "download");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Done");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[0]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[0]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[0]), ==, 65535);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[0]), ==, 65535);
@@ -743,7 +743,7 @@ test_get_changes_sync (void)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[1]), ==, "101");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[1]), ==, "install");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[1]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[1]), ==, "Done");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[1]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[1]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[1]), ==, 1);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[1]), ==, 1);
@@ -753,7 +753,7 @@ test_get_changes_sync (void)
     g_assert_cmpstr (snapd_change_get_id (changes->pdata[1]), ==, "2");
     g_assert_cmpstr (snapd_change_get_kind (changes->pdata[1]), ==, "KIND");
     g_assert_cmpstr (snapd_change_get_summary (changes->pdata[1]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_change_get_status (changes->pdata[1]), ==, "Do");
+    g_assert_cmpint (snapd_change_get_status_code (changes->pdata[1]), ==, SNAPD_TASK_STATUS_DO);
     g_assert_false (snapd_change_get_ready (changes->pdata[1]));
     g_assert (date_matches (snapd_change_get_spawn_time (changes->pdata[1]), 2017, 1, 2, 11, 15, 0));
     g_assert_null (snapd_change_get_ready_time (changes->pdata[1]));
@@ -764,7 +764,7 @@ test_get_changes_sync (void)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[0]), ==, "200");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[0]), ==, "remove");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Do");
+    g_assert_cmpint (snapd_task_get_status_code (changes->pdata[0]), ==, SNAPD_TASK_STATUS_DO);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[0]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[0]), ==, 0);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[0]), ==, 1);
@@ -788,7 +788,7 @@ get_changes_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_cmpstr (snapd_change_get_id (changes->pdata[0]), ==, "1");
     g_assert_cmpstr (snapd_change_get_kind (changes->pdata[0]), ==, "KIND");
     g_assert_cmpstr (snapd_change_get_summary (changes->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_change_get_status (changes->pdata[0]), ==, "Done");
+    g_assert_cmpint (snapd_change_get_status_code (changes->pdata[0]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_true (snapd_change_get_ready (changes->pdata[0]));
     g_assert (date_matches (snapd_change_get_spawn_time (changes->pdata[0]), 2017, 1, 2, 11, 0, 0));
     g_assert (date_matches (snapd_change_get_ready_time (changes->pdata[0]), 2017, 1, 2, 11, 0, 30));
@@ -799,7 +799,7 @@ get_changes_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[0]), ==, "100");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[0]), ==, "download");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Done");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[0]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[0]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[0]), ==, 65535);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[0]), ==, 65535);
@@ -809,7 +809,7 @@ get_changes_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[1]), ==, "101");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[1]), ==, "install");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[1]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[1]), ==, "Done");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[1]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[1]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[1]), ==, 1);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[1]), ==, 1);
@@ -819,7 +819,7 @@ get_changes_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_cmpstr (snapd_change_get_id (changes->pdata[1]), ==, "2");
     g_assert_cmpstr (snapd_change_get_kind (changes->pdata[1]), ==, "KIND");
     g_assert_cmpstr (snapd_change_get_summary (changes->pdata[1]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_change_get_status (changes->pdata[1]), ==, "Do");
+    g_assert_cmpint (snapd_change_get_status_code (changes->pdata[1]), ==, SNAPD_TASK_STATUS_DO);
     g_assert_false (snapd_change_get_ready (changes->pdata[1]));
     g_assert (date_matches (snapd_change_get_spawn_time (changes->pdata[1]), 2017, 1, 2, 11, 15, 0));
     g_assert_null (snapd_change_get_ready_time (changes->pdata[1]));
@@ -830,7 +830,7 @@ get_changes_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[0]), ==, "200");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[0]), ==, "remove");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Do");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[0]), ==, SNAPD_TASK_STATUS_DO);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[0]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[0]), ==, 0);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[0]), ==, 1);
@@ -1070,7 +1070,7 @@ test_get_change_sync (void)
     g_assert_cmpstr (snapd_change_get_id (change), ==, "1");
     g_assert_cmpstr (snapd_change_get_kind (change), ==, "KIND");
     g_assert_cmpstr (snapd_change_get_summary (change), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_change_get_status (change), ==, "Done");
+    g_assert_cmpint (snapd_change_get_status_code (change), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_true (snapd_change_get_ready (change));
     g_assert (date_matches (snapd_change_get_spawn_time (change), 2017, 1, 2, 11, 0, 0));
     g_assert (date_matches (snapd_change_get_ready_time (change), 2017, 1, 2, 11, 0, 30));
@@ -1081,7 +1081,7 @@ test_get_change_sync (void)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[0]), ==, "100");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[0]), ==, "download");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Done");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[0]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[0]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[0]), ==, 65535);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[0]), ==, 65535);
@@ -1104,7 +1104,7 @@ get_change_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_cmpstr (snapd_change_get_id (change), ==, "1");
     g_assert_cmpstr (snapd_change_get_kind (change), ==, "KIND");
     g_assert_cmpstr (snapd_change_get_summary (change), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_change_get_status (change), ==, "Done");
+    g_assert_cmpint (snapd_change_get_status_code (change), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_true (snapd_change_get_ready (change));
     g_assert (date_matches (snapd_change_get_spawn_time (change), 2017, 1, 2, 11, 0, 0));
     g_assert (date_matches (snapd_change_get_ready_time (change), 2017, 1, 2, 11, 0, 30));
@@ -1115,7 +1115,7 @@ get_change_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_cmpstr (snapd_task_get_id (tasks->pdata[0]), ==, "100");
     g_assert_cmpstr (snapd_task_get_kind (tasks->pdata[0]), ==, "download");
     g_assert_cmpstr (snapd_task_get_summary (tasks->pdata[0]), ==, "SUMMARY");
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Done");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[0]), ==, SNAPD_TASK_STATUS_DONE);
     g_assert_cmpstr (snapd_task_get_progress_label (tasks->pdata[0]), ==, "LABEL");
     g_assert_cmpint (snapd_task_get_progress_done (tasks->pdata[0]), ==, 65535);
     g_assert_cmpint (snapd_task_get_progress_total (tasks->pdata[0]), ==, 65535);
@@ -1192,11 +1192,11 @@ test_abort_change_sync (void)
     g_assert_no_error (error);
     g_assert_nonnull (change);
     g_assert_true (snapd_change_get_ready (change));
-    g_assert_cmpstr (snapd_change_get_status (change), ==, "Error");
+    g_assert_cmpint (snapd_change_get_status_code (change), ==, SNAPD_TASK_STATUS_ERROR);
     g_assert_cmpstr (snapd_change_get_error (change), ==, "cancelled");
     tasks = snapd_change_get_tasks (change);
     g_assert_cmpint (tasks->len, ==, 1);
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Error");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[0]), ==, SNAPD_TASK_STATUS_ERROR);
 }
 
 static void
@@ -1211,11 +1211,11 @@ abort_change_cb (GObject *object, GAsyncResult *result, gpointer user_data)
     g_assert_no_error (error);
     g_assert_nonnull (change);
     g_assert_true (snapd_change_get_ready (change));
-    g_assert_cmpstr (snapd_change_get_status (change), ==, "Error");
+    g_assert_cmpint (snapd_change_get_status_code (change), ==, SNAPD_TASK_STATUS_ERROR);
     g_assert_cmpstr (snapd_change_get_error (change), ==, "cancelled");
     tasks = snapd_change_get_tasks (change);
     g_assert_cmpint (tasks->len, ==, 1);
-    g_assert_cmpstr (snapd_task_get_status (tasks->pdata[0]), ==, "Error");
+    g_assert_cmpint (snapd_task_get_status_code (tasks->pdata[0]), ==, SNAPD_TASK_STATUS_ERROR);
 
     g_main_loop_quit (data->loop);
 }
@@ -4036,11 +4036,11 @@ install_progress_cb (SnapdClient *client, SnapdChange *change, gpointer deprecat
     g_assert_cmpstr (snapd_change_get_kind (change), ==, "KIND");
     g_assert_cmpstr (snapd_change_get_summary (change), ==, "SUMMARY");
     if (progress_done == progress_total) {
-        g_assert_cmpstr (snapd_change_get_status (change), ==, "Done");
+        g_assert_cmpint (snapd_change_get_status_code (change), ==, SNAPD_TASK_STATUS_DONE);
         g_assert_true (snapd_change_get_ready (change));
     }
     else {
-        g_assert_cmpstr (snapd_change_get_status (change), ==, "Do");
+        g_assert_cmpint (snapd_change_get_status_code (change), ==, SNAPD_TASK_STATUS_DO);
         g_assert_false (snapd_change_get_ready (change));
     }
     g_assert_cmpstr (spawn_time, ==, data->spawn_time);

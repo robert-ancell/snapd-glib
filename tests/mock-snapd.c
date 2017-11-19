@@ -667,6 +667,7 @@ add_change (MockSnapd *snapd)
     change->id = g_strdup_printf ("%d", snapd->change_index);
     change->kind = g_strdup ("KIND");
     change->summary = g_strdup ("SUMMARY");
+    change->status = g_strdup ("Do");
     change->task_index = snapd->change_index * 100;
     snapd->changes = g_list_append (snapd->changes, change);
 
