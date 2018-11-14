@@ -58,7 +58,13 @@ public:
         AuthCancelled,
         NotClassic,
         RevisionNotAvailable,
-        ChannelNotAvailable
+        ChannelNotAvailable,
+        AppNotFound,
+        ArchitectureNotAvailable,
+        ChangeConflict,
+        NotASnap,
+        InterfacesUnchanged,
+        OptionNotFound
     };
     Q_ENUM(QSnapdError)
 

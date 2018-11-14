@@ -159,6 +159,24 @@ void QSnapdRequest::finish (void *error)
             case SNAPD_ERROR_CHANNEL_NOT_AVAILABLE:
                 d->error = QSnapdRequest::QSnapdError::ChannelNotAvailable;
                 break;
+            case SNAPD_ERROR_APP_NOT_FOUND:
+                d->error = QSnapdRequest::QSnapdError::AppNotFound;
+                break;
+            case SNAPD_ERROR_ARCHITECTURE_NOT_AVAILABLE:
+                d->error = QSnapdRequest::QSnapdError::ArchitectureNotAvailable;
+                break;
+            case SNAPD_ERROR_CHANGE_CONFLICT:
+                d->error = QSnapdRequest::QSnapdError::ChangeConflict;
+                break;
+            case SNAPD_ERROR_NOT_A_SNAP:
+                d->error = QSnapdRequest::QSnapdError::NotASnap;
+                break;
+            case SNAPD_ERROR_INTERFACES_UNCHANGED:
+                d->error = QSnapdRequest::QSnapdError::InterfacesUnchanged;
+                break;
+            case SNAPD_ERROR_OPTION_NOT_FOUND:
+                d->error = QSnapdRequest::QSnapdError::OptionNotFound;
+                break;
             default:
                 /* This indicates we should add a new entry here... */
                 d->error = QSnapdRequest::QSnapdError::UnknownError;
