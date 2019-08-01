@@ -684,6 +684,23 @@ snapd_publisher_validation_get_type
 </SECTION>
 
 <SECTION>
+<FILE>snapd-snapshot</FILE>
+<TITLE>SnapdSnapshot</TITLE>
+SnapdSnapshot
+snapd_snapshot_get_auto
+snapd_snapshot_get_revision
+snapd_snapshot_get_size
+snapd_snapshot_get_snap
+snapd_snapshot_get_snap_id
+snapd_snapshot_get_summary
+snapd_snapshot_get_time
+snapd_snapshot_get_version
+
+<SUBSECTION Private>
+SNAPD_TYPE_SNAPSHOT
+</SECTION>
+
+<SECTION>
 <FILE>snapd-system-information</FILE>
 <TITLE>SnapdSystemInformation</TITLE>
 SnapdSystemConfinement

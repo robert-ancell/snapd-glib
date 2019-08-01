@@ -27,6 +27,7 @@ source_h = \
 	snapd-slot.h \
 	snapd-slot-ref.h \
 	snapd-snap.h \
+	snapd-snapshot.h \
 	snapd-system-information.h \
 	snapd-task.h \
 	snapd-user-information.h \
@@ -93,6 +94,7 @@ source_c = \
 	snapd-slot.c \
 	snapd-slot-ref.c \
 	snapd-snap.c \
+	snapd-snapshot.c \
 	snapd-system-information.c \
 	snapd-task.c \
 	snapd-user-information.c
