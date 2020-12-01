@@ -17,6 +17,7 @@
 #include <glib-object.h>
 #include <snapd-glib/snapd-channel.h>
 #include <snapd-glib/snapd-price.h>
+#include <snapd-glib/snapd-snap-health.h>
 
 G_BEGIN_DECLS
 
@@ -125,6 +126,8 @@ GDateTime               *snapd_snap_get_install_date           (SnapdSnap   *sna
 gint64                   snapd_snap_get_installed_size         (SnapdSnap   *snap);
 
 gboolean                 snapd_snap_get_jailmode               (SnapdSnap   *snap);
+
+SnapdSnapHealth         *snapd_snap_get_health                 (SnapdSnap   *snap);
 
 const gchar             *snapd_snap_get_license                (SnapdSnap   *snap);
 

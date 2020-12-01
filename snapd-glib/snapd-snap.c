@@ -48,6 +48,7 @@ struct _SnapdSnap
     GDateTime *install_date;
     gint64 installed_size;
     gboolean jailmode;
+    SnapdSnapHealth *health;
     gchar *license;
     GPtrArray *media;
     gchar *mounted_from;
@@ -111,6 +112,7 @@ enum
     PROP_MOUNTED_FROM,
     PROP_MEDIA,
     PROP_WEBSITE,
+    PROP_HEALTH,
     PROP_LAST
 };
 
@@ -467,6 +469,23 @@ snapd_snap_get_jailmode (SnapdSnap *self)
 {
     g_return_val_if_fail (SNAPD_IS_SNAP (self), FALSE);
     return self->jailmode;
+}
+
+/**
+ * snapd_snap_get_health:
+ * @snap: a #SnapdSnap.
+ *
+ * Get the health status of this snap or %NULL if not set.
+ *
+ * Returns: (transfer none) (allow-none): an #SnapdSnapHealth or %NULL.
+ *
+ * Since: 1.59
+ */
+SnapdSnapHealth *
+snapd_snap_get_health (SnapdSnap *self)
+{
+    g_return_val_if_fail (SNAPD_IS_SNAP (self), NULL);
+    return self->health;
 }
 
 /**
@@ -983,6 +1002,10 @@ snapd_snap_set_property (GObject *object, guint prop_id, const GValue *value, GP
         g_free (self->website);
         self->website = g_strdup (g_value_get_string (value));
         break;
+    case PROP_HEALTH:
+        g_clear_object (&self->health);
+        self->health = g_value_dup_object (value);
+        break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
         break;
@@ -1107,6 +1130,9 @@ snapd_snap_get_property (GObject *object, guint prop_id, GValue *value, GParamSp
     case PROP_WEBSITE:
         g_value_set_string (value, self->website);
         break;
+    case PROP_HEALTH:
+        g_value_set_object (value, self->health);
+        break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
         break;
@@ -1130,6 +1156,7 @@ snapd_snap_finalize (GObject *object)
     g_clear_pointer (&self->id, g_free);
     g_clear_pointer (&self->install_date, g_date_time_unref);
     g_clear_pointer (&self->name, g_free);
+    g_clear_object (&self->health);
     g_clear_pointer (&self->license, g_free);
     g_clear_pointer (&self->media, g_ptr_array_unref);
     g_clear_pointer (&self->mounted_from, g_free);
