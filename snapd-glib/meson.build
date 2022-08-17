@@ -31,6 +31,7 @@ source_h = [
 ]
 
 source_private_h = [
+  'http-unix-session.h',
   'requests/snapd-json.h',
   'requests/snapd-get-aliases.h',
   'requests/snapd-get-apps.h',
@@ -102,6 +103,7 @@ source_c = [
 ]
 
 source_private_c = [
+  'http-unix-session.c',
   'requests/snapd-json.c',
   'requests/snapd-get-aliases.c',
   'requests/snapd-get-apps.c',
