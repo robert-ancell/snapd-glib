@@ -4105,21 +4105,17 @@ snapd_client_new (void)
  * snapd_client_new_from_socket:
  * @socket: A #GSocket that is connected to snapd.
  *
- * Create a new client to talk on an existing socket.
+ * This method no longer does anything and always returns %NULL.
  *
- * Returns: a new #SnapdClient
+ * Returns: %NULL.
  *
  * Since: 1.5
+ * Deprecated: 1.61
  **/
 SnapdClient *
 snapd_client_new_from_socket (GSocket *socket)
 {
-    SnapdClient *self = snapd_client_new ();
-    SnapdClientPrivate *priv = snapd_client_get_instance_private (SNAPD_CLIENT (self));
-    priv->snapd_socket = g_object_ref (socket);
-    g_socket_set_blocking (priv->snapd_socket, FALSE);
-
-    return self;
+    return NULL;
 }
 
 static void
